@@ -62,3 +62,8 @@ PROJECT_CONTEXT.md
 CONTINUATION_PROMPT.md
 __pycache__/
 *.bak
+
+# Build and emulator logs carry local paths
+work/*.log
+work/*.txt
+work/**/build.log

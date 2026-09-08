@@ -19,7 +19,7 @@ class SettingsResetReportStoreTest {
         val error = IllegalStateException(
             "bad preferences acoustid_api_key=SECRET api_key=SECRET token=SECRET " +
                 "proxyPassword=hunter2 content://media/video/123 " +
-                "https://api.example.com/reset?key=SECRET C:\\Users\\--\\secret.txt"
+                "https://api.example.com/reset?key=SECRET C:\\Users\\dev\\secret.txt"
         )
 
         store.recordCorruptionReset(error, nowEpochMs = 1234L)
