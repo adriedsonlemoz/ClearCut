@@ -4,7 +4,7 @@
 
 <h1 align="center">ClearCut</h1>
 
-[![Version](https://img.shields.io/badge/version-3.81.8-89dceb)](https://github.com/SysAdminDoc/ClearCut/releases)
+[![Version](https://img.shields.io/badge/version-3.81.9-89dceb)](https://github.com/SysAdminDoc/ClearCut/releases)
 [![License](https://img.shields.io/badge/license-MIT-a6e3a1)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-Android-cba6f7)
 
@@ -812,4 +812,4 @@ MIT
 
 ### GitHub Actions APK build
 
-This source package includes `.github/workflows/android.yml`. The workflow can be started manually with **Run workflow** and builds the Android debug APKs with the bundled Gradle Wrapper, publishing only armeabi-v7a and arm64-v8a APKs as workflow artifacts; the universal/x86 APKs are intentionally disabled to avoid duplicating the large native payload. GitHub Manager metadata is available in `github-manager.json`. The lightweight source package omits design-reference PNG mockups from `artifacts/`; app resources, visual-test baselines, and Play Store assets are preserved.
+This source package includes `.github/workflows/android.yml`. The workflow can be started manually with **Run workflow** and builds exactly two Android debug APKs with the bundled Gradle Wrapper: `arm64-v8a` and `armeabi-v7a`. They are published directly as separate raw `.apk` assets in the GitHub Release, not bundled together in a GitHub Actions artifact ZIP. Universal, x86, x86_64, source archives, and extra workflow files are intentionally not published. GitHub Manager metadata is available in `github-manager.json`. The lightweight source package omits design-reference PNG mockups from `artifacts/`; app resources, visual-test baselines, and Play Store assets are preserved.

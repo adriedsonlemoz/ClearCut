@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.81.9
+
+- GitHub Actions no longer uploads a combined Actions artifact containing both APKs.
+- The workflow now publishes exactly two raw APK assets directly to the GitHub Release: `arm64-v8a` and `armeabi-v7a`.
+- No x86, x86_64, universal APK, source archive, or extra file is published by the Android workflow.
+- Version updated to 3.81.9 (code 308).
+
 ## 3.81.8
 
 - APK generation is now restricted to `arm64-v8a` and `armeabi-v7a`; x86, x86_64, and the universal APK are no longer produced by the GitHub workflow.

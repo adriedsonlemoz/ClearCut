@@ -10,7 +10,7 @@ on:
       - "work/**"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: clearcut-android-${{ github.ref }}
@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   build:
-    name: Gerar APK
+    name: Gerar APKs ARM
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -51,35 +51,44 @@ jobs:
       - name: Gerar APKs de debug
         run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
 
-      - name: Preparar APKs
+      - name: Preparar APKs ARM separados
         shell: bash
         run: |
           set -euo pipefail
+          rm -rf dist
           mkdir -p dist
-          mapfile -t apks < <(find app/build/outputs/apk/debug -type f -name '*.apk' | sort)
-          if [ "${#apks[@]}" -eq 0 ]; then
-            echo "Nenhum APK foi gerado."
-            exit 1
-          fi
-          for apk in "${apks[@]}"; do
-            base="$(basename "$apk")"
-            case "$base" in
-              *arm64-v8a*) out="ClearCut-3.81.8-arm64-v8a.apk" ;;
-              *armeabi-v7a*) out="ClearCut-3.81.8-armeabi-v7a.apk" ;;
-              *)
-                echo "Ignorando APK inesperado: $base"
-                continue
-                ;;
-            esac
-            cp "$apk" "dist/$out"
-          done
-          echo "APKs preparados:"
-          ls -lh dist
 
-      - name: Publicar APKs
-        uses: actions/upload-artifact@v7
-        with:
-          name: ClearCut-3.81.8-APK
-          path: dist/*.apk
-          if-no-files-found: error
-          retention-days: 30
+          arm64="$(find app/build/outputs/apk/debug -type f -name '*arm64-v8a*.apk' -print -quit)"
+          armv7="$(find app/build/outputs/apk/debug -type f -name '*armeabi-v7a*.apk' -print -quit)"
+
+          test -n "$arm64" || { echo "APK arm64-v8a não encontrado."; exit 1; }
+          test -n "$armv7" || { echo "APK armeabi-v7a não encontrado."; exit 1; }
+
+          cp "$arm64" "dist/ClearCut-3.81.9-arm64-v8a.apk"
+          cp "$armv7" "dist/ClearCut-3.81.9-armeabi-v7a.apk"
+
+          test "$(find dist -maxdepth 1 -type f -name '*.apk' | wc -l)" -eq 2
+          test "$(find dist -maxdepth 1 -type f ! -name '*.apk' | wc -l)" -eq 0
+
+          echo "APKs finais:"
+          ls -lh dist/*.apk
+
+      - name: Publicar APKs diretamente no Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="v3.81.9"
+          title="ClearCut 3.81.9"
+          arm64="dist/ClearCut-3.81.9-arm64-v8a.apk"
+          armv7="dist/ClearCut-3.81.9-armeabi-v7a.apk"
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$arm64" "$armv7" --clobber
+          else
+            gh release create "$tag" "$arm64" "$armv7" \
+              --target "$GITHUB_SHA" \
+              --title "$title" \
+              --notes "APKs Android ARM separados. Use arm64-v8a em aparelhos Android modernos e armeabi-v7a em aparelhos ARM 32 bits."
+          fi
