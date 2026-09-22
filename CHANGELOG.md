@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.81.8
+
+- APK generation is now restricted to `arm64-v8a` and `armeabi-v7a`; x86, x86_64, and the universal APK are no longer produced by the GitHub workflow.
+- GitHub Manager now targets the `arm64-v8a` APK for modern Android devices.
+- Removed only the 9 PNG design-reference/mockup files under `artifacts/` (~9.3 MiB uncompressed); app PNG resources, screenshot-test baselines, Play Store assets, and work captures were preserved.
+- Version updated to 3.81.8 (code 307).
+
 ## 3.81.7
 
 - Corrigida a falha do GitHub Actions em `:app:compileDebugKotlin` causada pela verificação da configuração `:app:kotlinBuildToolsApiClasspath`.

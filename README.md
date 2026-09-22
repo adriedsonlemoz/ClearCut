@@ -4,7 +4,7 @@
 
 <h1 align="center">ClearCut</h1>
 
-[![Version](https://img.shields.io/badge/version-3.81.7-89dceb)](https://github.com/SysAdminDoc/ClearCut/releases)
+[![Version](https://img.shields.io/badge/version-3.81.8-89dceb)](https://github.com/SysAdminDoc/ClearCut/releases)
 [![License](https://img.shields.io/badge/license-MIT-a6e3a1)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-Android-cba6f7)
 
@@ -327,9 +327,6 @@ with the project identity, track controls remain compact, and a six-category
 tool dock keeps advanced actions available without turning the canvas into a
 dashboard.
 
-<p align="center">
-  <img src="artifacts/clearcut-atelier-editor.png" alt="ClearCut AMOLED Android editing workspace" width="360" />
-</p>
 
 ## Project planning
 
@@ -815,4 +812,4 @@ MIT
 
 ### GitHub Actions APK build
 
-This source package includes `.github/workflows/android.yml`. The workflow can be started manually with **Run workflow** and builds the Android debug APKs with the bundled Gradle Wrapper, publishing universal and per-ABI APKs as workflow artifacts. GitHub Manager metadata is available in `github-manager.json`.
+This source package includes `.github/workflows/android.yml`. The workflow can be started manually with **Run workflow** and builds the Android debug APKs with the bundled Gradle Wrapper, publishing only armeabi-v7a and arm64-v8a APKs as workflow artifacts; the universal/x86 APKs are intentionally disabled to avoid duplicating the large native payload. GitHub Manager metadata is available in `github-manager.json`. The lightweight source package omits design-reference PNG mockups from `artifacts/`; app resources, visual-test baselines, and Play Store assets are preserved.
