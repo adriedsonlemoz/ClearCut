@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.81.6
+
+- Corrigida a falha do GitHub Actions em `:app:compileDebugNavigationResources` causada pela verificação do AAPT2 para Linux.
+- Adicionado o SHA-256 verificado de `com.android.tools.build:aapt2:9.1.1-14792394` (`aapt2-9.1.1-14792394-linux.jar`), exatamente o artefato usado pelo runner Ubuntu.
+- Adicionado também o hash do AAPT2 para macOS para tornar o metadata da mesma versão multiplataforma, mantendo a verificação estrita de dependências.
+
 ## 3.81.5
 
 - Corrigida a nova falha de verificação de dependências revelada pelo build na tarefa `:app:kspDebugKotlin`.

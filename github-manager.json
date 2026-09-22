@@ -2,7 +2,7 @@
   "project": "ClearCut",
   "displayName": "ClearCut",
   "applicationId": "com.novacut.editor",
-  "versionName": "3.81.5",
-  "versionCode": 304,
+  "versionName": "3.81.6",
+  "versionCode": 305,
   "apkPattern": "ClearCut-{version}-universal.apk"
 }

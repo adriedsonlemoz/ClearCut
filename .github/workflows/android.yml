@@ -64,12 +64,12 @@ jobs:
           for apk in "${apks[@]}"; do
             base="$(basename "$apk")"
             case "$base" in
-              *universal*) out="ClearCut-3.81.5-universal.apk" ;;
-              *arm64-v8a*) out="ClearCut-3.81.5-arm64-v8a.apk" ;;
-              *armeabi-v7a*) out="ClearCut-3.81.5-armeabi-v7a.apk" ;;
-              *x86_64*) out="ClearCut-3.81.5-x86_64.apk" ;;
-              *x86*) out="ClearCut-3.81.5-x86.apk" ;;
-              *) out="ClearCut-3.81.5-${base}" ;;
+              *universal*) out="ClearCut-3.81.6-universal.apk" ;;
+              *arm64-v8a*) out="ClearCut-3.81.6-arm64-v8a.apk" ;;
+              *armeabi-v7a*) out="ClearCut-3.81.6-armeabi-v7a.apk" ;;
+              *x86_64*) out="ClearCut-3.81.6-x86_64.apk" ;;
+              *x86*) out="ClearCut-3.81.6-x86.apk" ;;
+              *) out="ClearCut-3.81.6-${base}" ;;
             esac
             cp "$apk" "dist/$out"
           done
@@ -79,7 +79,7 @@ jobs:
       - name: Publicar APKs
         uses: actions/upload-artifact@v7
         with:
-          name: ClearCut-3.81.5-APK
+          name: ClearCut-3.81.6-APK
           path: dist/*.apk
           if-no-files-found: error
           retention-days: 30
