@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.81.7
+
+- Corrigida a falha do GitHub Actions em `:app:compileDebugKotlin` causada pela verificação da configuração `:app:kotlinBuildToolsApiClasspath`.
+- Adicionado ao `gradle/verification-metadata.xml` o SHA-256 verificado de `org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0` (`kotlinx-coroutines-bom-1.8.0.pom`).
+- Mantida a verificação estrita de dependências; nenhuma proteção do Gradle foi desativada.
+
 ## 3.81.6
 
 - Corrigida a falha do GitHub Actions em `:app:compileDebugNavigationResources` causada pela verificação do AAPT2 para Linux.
