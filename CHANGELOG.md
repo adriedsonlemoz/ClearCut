@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.81.5
+
+- Corrigida a nova falha de verificação de dependências revelada pelo build na tarefa `:app:kspDebugKotlin`.
+- Adicionado ao `gradle/verification-metadata.xml` o SHA-256 verificado de `org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2` (`kotlinx-coroutines-bom-1.10.2.pom`).
+- Mantida a verificação estrita de dependências; nenhuma proteção do Gradle foi desativada.
+
 ## 3.81.4
 
 - Corrigida a falha de verificação de dependências que interrompia o Gradle antes da compilação do app.
