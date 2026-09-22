@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.81.2
+
+- Corrigido o workflow Android que falhava na etapa de configuração do SDK porque `setup-android@v3` tentava instalar o pacote obsoleto `tools`.
+- Atualizado `android-actions/setup-android` para v4 e a plataforma Android 37 agora é instalada explicitamente sem solicitar o pacote removido.
+- Atualizadas as Actions de checkout, Java e upload de artefatos para versões atuais com runtime Node 24.
+- Mantida a geração dos APKs universal e por ABI pelo GitHub Actions.
+
 ## 3.81.1
 
 - Added a GitHub Actions Android workflow for manual and push-triggered APK builds.
