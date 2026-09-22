@@ -5,7 +5,11 @@ plugins {
 
 android {
     namespace = "com.clearcut.baselineprofile"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 1
+        }
+    }
     targetProjectPath = ":app"
 
     defaultConfig {

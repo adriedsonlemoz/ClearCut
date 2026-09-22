@@ -69,9 +69,13 @@ def verify_export_service_has_no_background_audio(root: Path = ROOT) -> None:
 def verify_android_17_target(root: Path = ROOT) -> None:
     build_path = root / APP_GRADLE.relative_to(ROOT)
     build = read_text(build_path)
-    for assignment in ("compileSdk = 37", "targetSdk = 37"):
-        if not re.search(rf"(?m)^\s*{re.escape(assignment)}\s*$", build):
-            raise AudioPolicyError(f"{rel(build_path)} must pin {assignment}")
+    required_patterns = (
+        (r"compileSdk\s*\{[\s\S]*?version\s*=\s*release\(37\)\s*\{[\s\S]*?minorApiLevel\s*=\s*1", "compileSdk 37.1"),
+        (r"(?m)^\s*targetSdk\s*=\s*37\s*$", "targetSdk = 37"),
+    )
+    for pattern, description in required_patterns:
+        if not re.search(pattern, build):
+            raise AudioPolicyError(f"{rel(build_path)} must pin {description}")
 
 
 def verify_large_screen_configuration(root: Path = ROOT) -> None:
@@ -162,7 +166,7 @@ def write_valid_fixture(root: Path, export_service: str = "class ExportService {
     write_fixture(
         root,
         "app/build.gradle.kts",
-        "android {\n    compileSdk = 37\n    defaultConfig {\n        targetSdk = 37\n    }\n}\n",
+        "android {\n    compileSdk {\n        version = release(37) {\n            minorApiLevel = 1\n        }\n    }\n    defaultConfig {\n        targetSdk = 37\n    }\n}\n",
     )
     write_fixture(root, "app/src/main/java/com/novacut/editor/engine/ExportService.kt", export_service)
     write_fixture(

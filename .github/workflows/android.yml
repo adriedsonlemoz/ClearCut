@@ -38,11 +38,12 @@ jobs:
         with:
           packages: ''
 
-      - name: Instalar plataforma Android 37
+      - name: Instalar Android SDK 37.1
         shell: bash
         run: |
           set -euo pipefail
-          sdkmanager "platform-tools" "platforms;android-37"
+          sdkmanager "platform-tools" "platforms;android-37.1"
+          test -f "$ANDROID_SDK_ROOT/platforms/android-37.1/android.jar"
 
       - name: Dar permissão ao Gradle Wrapper
         run: chmod +x ./gradlew
@@ -63,12 +64,12 @@ jobs:
           for apk in "${apks[@]}"; do
             base="$(basename "$apk")"
             case "$base" in
-              *universal*) out="ClearCut-3.81.2-universal.apk" ;;
-              *arm64-v8a*) out="ClearCut-3.81.2-arm64-v8a.apk" ;;
-              *armeabi-v7a*) out="ClearCut-3.81.2-armeabi-v7a.apk" ;;
-              *x86_64*) out="ClearCut-3.81.2-x86_64.apk" ;;
-              *x86*) out="ClearCut-3.81.2-x86.apk" ;;
-              *) out="ClearCut-3.81.2-${base}" ;;
+              *universal*) out="ClearCut-3.81.3-universal.apk" ;;
+              *arm64-v8a*) out="ClearCut-3.81.3-arm64-v8a.apk" ;;
+              *armeabi-v7a*) out="ClearCut-3.81.3-armeabi-v7a.apk" ;;
+              *x86_64*) out="ClearCut-3.81.3-x86_64.apk" ;;
+              *x86*) out="ClearCut-3.81.3-x86.apk" ;;
+              *) out="ClearCut-3.81.3-${base}" ;;
             esac
             cp "$apk" "dist/$out"
           done
@@ -78,7 +79,7 @@ jobs:
       - name: Publicar APKs
         uses: actions/upload-artifact@v7
         with:
-          name: ClearCut-3.81.2-APK
+          name: ClearCut-3.81.3-APK
           path: dist/*.apk
           if-no-files-found: error
           retention-days: 30

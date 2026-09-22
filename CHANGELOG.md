@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.81.3
+
+- Corrigido o segundo erro do GitHub Actions: o repositório do Android SDK não publica mais a plataforma atual como `platforms;android-37`; o pacote disponível é `platforms;android-37.1`.
+- O app e o módulo de baseline profile agora compilam explicitamente contra Android SDK 37.1 usando o suporte a `minorApiLevel = 1` do AGP, mantendo `targetSdk = 37`.
+- O workflow instala e valida `platforms;android-37.1` antes de iniciar o Gradle, evitando avançar para o build com uma plataforma ausente.
+- Atualizado o validador interno da política Android 17 para reconhecer a configuração de `compileSdk` 37.1.
+
 ## 3.81.2
 
 - Corrigido o workflow Android que falhava na etapa de configuração do SDK porque `setup-android@v3` tentava instalar o pacote obsoleto `tools`.

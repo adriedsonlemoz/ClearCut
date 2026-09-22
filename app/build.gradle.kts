@@ -28,14 +28,18 @@ val bundleTaskRequested = gradle.startParameter.taskNames.any { taskName ->
 
 android {
     namespace = "com.novacut.editor"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
         applicationId = "com.novacut.editor"
         minSdk = 26
         targetSdk = 37
-        versionCode = 301
-        versionName = "3.81.2"
+        versionCode = 302
+        versionName = "3.81.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testBuildType = "qa"
 
