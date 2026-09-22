@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.81.4
+
+- Corrigida a falha de verificação de dependências que interrompia o Gradle antes da compilação do app.
+- Adicionados ao `gradle/verification-metadata.xml` os SHA-256 ausentes para `guava-parent 33.3.1-jre`, `junit-bom 5.10.2`, `junit-bom 5.11.0-M2` e `kotlin-gradle-plugins-bom 2.2.10`.
+- Mantida a verificação estrita de dependências; o workflow não desativa a proteção nem aceita artefatos automaticamente.
+
 ## 3.81.3
 
 - Corrigido o segundo erro do GitHub Actions: o repositório do Android SDK não publica mais a plataforma atual como `platforms;android-37`; o pacote disponível é `platforms;android-37.1`.
