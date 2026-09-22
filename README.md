@@ -812,3 +812,7 @@ Normal debug and release APKs omit dormant Nearby/local-network permissions. Tho
 ## License
 
 MIT
+
+### GitHub Actions APK build
+
+This source package includes `.github/workflows/android.yml`. The workflow can be started manually with **Run workflow** and builds the Android debug APKs with the bundled Gradle Wrapper, publishing universal and per-ABI APKs as workflow artifacts. GitHub Manager metadata is available in `github-manager.json`.

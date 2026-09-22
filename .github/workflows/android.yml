@@ -1,0 +1,76 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main", "master" ]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - "work/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clearcut-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Gerar APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Dar permissão ao Gradle Wrapper
+        run: chmod +x ./gradlew
+
+      - name: Gerar APKs de debug
+        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Preparar APKs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          mapfile -t apks < <(find app/build/outputs/apk/debug -type f -name '*.apk' | sort)
+          if [ "${#apks[@]}" -eq 0 ]; then
+            echo "Nenhum APK foi gerado."
+            exit 1
+          fi
+          for apk in "${apks[@]}"; do
+            base="$(basename "$apk")"
+            case "$base" in
+              *universal*) out="ClearCut-3.81.1-universal.apk" ;;
+              *arm64-v8a*) out="ClearCut-3.81.1-arm64-v8a.apk" ;;
+              *armeabi-v7a*) out="ClearCut-3.81.1-armeabi-v7a.apk" ;;
+              *x86_64*) out="ClearCut-3.81.1-x86_64.apk" ;;
+              *x86*) out="ClearCut-3.81.1-x86.apk" ;;
+              *) out="ClearCut-3.81.1-${base}" ;;
+            esac
+            cp "$apk" "dist/$out"
+          done
+          echo "APKs preparados:"
+          ls -lh dist
+
+      - name: Publicar APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClearCut-3.81.1-APK
+          path: dist/*.apk
+          if-no-files-found: error
+          retention-days: 30

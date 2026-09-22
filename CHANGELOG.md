@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.81.1
+
+- Added a GitHub Actions Android workflow for manual and push-triggered APK builds.
+- Publishes universal and per-ABI debug APKs as downloadable workflow artifacts.
+- Added `github-manager.json` metadata for GitHub Manager integration.
+
 ## Unreleased
 
 - The dashboard no longer spins forever when the project database fails to answer. A failed query now shows what happened and offers Retry, which genuinely re-subscribes, instead of leaving a spinner that could never resolve.
